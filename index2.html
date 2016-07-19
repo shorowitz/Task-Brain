@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.node .leaf{
+  cursor: pointer;
+}
+
+.node:hover {
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.label {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  src: local('Inconsolata'), url(https://fonts.gstatic.com/s/inconsolata/v12/BjAYBlHtW3CJxDcjzrnZCCYE0-AqJ3nfInTTiDXDjU4.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+  text-anchor: middle;
+  text-shadow: 0 1px 0 #000, 1px 0 0 #000, -1px 0 0 #000, 0 -1px 0 #000;
+}
+
+.circleText {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  color: #fff;
+}
+
+.label,
+.node--root,
+.node--leaf {
+  pointer-events: none;
+}
+
+</style>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
+<script>
+
+var overlapNode = [];
+
+var diameter = 700,
+    margin = 20,
+    format = d3.format(",d");
+
+var colorScale = d3.scale.linear()
+    .domain(["1", "2", "3"])
+    .range(["#419a43","#ffb20c","#e80535"]);
+
+var color = d3.scale.linear()
+    .domain([-1, 5])
+    .range(["188.7, 21.9%, 49.2%", "hsl(188.2,21.6%,80%)"])
+    .interpolate(d3.interpolateHcl);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", diameter)
+    .attr("height", diameter)
+  .append("g")
+    .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+
+d3.json("issues.json", function(error, issues) {
+
+  var filteredIssues = issues.filter(function(d) { return d.status !== 'CLOSED'})
+
+  var nestedIssues = d3.nest()
+    .key(function(d) {return d.milestone.categoryName })
+    .key(function(d) {return d.milestone.name})
+    .key(function(d) {return d.assignee.firstName})
+    .key(function(d) { return d.title})
+    .rollup(function(values) {
+      return {
+        allValues: values.length,
+        title: values[0].title,
+        milestone: values[0].milestone.name,
+        assignee: values[0].assignee.firstName + " " + values[0].assignee.lastName,
+        priority: values[0].priority,
+        status: values[0].status
+    }})
+    .entries(filteredIssues)
+
+    // console.log(nestedIssues)
+
+  var pack = d3.layout.pack()
+    .size([diameter - 4, diameter - 4])
+    .children(function(d) {
+      return d.values;  // accessor for children
+    })
+    .value(function(d) {
+      return d.values.allValues;  // accessor for values
+    });
+
+  var issueRoot = {
+      key: "Tasks",
+      values: nestedIssues
+  };
+
+  var focus = issueRoot,
+      nodes = pack.nodes(issueRoot),
+      view;
+
+  var node = svg.datum(issueRoot).selectAll(".node")
+    .data(nodes)
+  .enter().append("g")
+    .attr("class", function(d) { return d.children ? "node" : "leaf node"; })
+
+  var circles = node.append("circle")
+    .attr("r", function(d) { return d.r; })
+    .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
+    .style("fill", function(d) { return d.children ? color(d.depth) : colorScale(d.values.priority); })
+    .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); })
+
+
+  var text = svg.selectAll("text")
+      .data(nodes)
+    .enter().append("text")
+      .attr("class", "label")
+      .style("fill", "#fff")
+      .style("fill-opacity", function(d) { return d.parent === issueRoot ? 1 : 0; })
+      .style("display", function(d) { return d.parent === issueRoot ? "inline" : "none"; })
+      .text( function(d) { return !d.children ? d.values.assignee + " - " + d.values.title : d.key === 0 ? '' : d.key})
+
+      circles.filter(function(d,i) { return d3.select(this).attr("class") === "node"; })
+          			.each(function(d,i) {
+          					overlapNode[i] = {
+          						name: d.key,
+          						depth: d.depth,
+          						r: d.r,
+          						x: d.x,
+          						y: d.y
+          					}
+          			});
+
+                //Create a wrapper for the arcs and text
+              		var hiddenArcWrapper = node.append("g")
+              			.attr("class", "hiddenArcWrapper")
+              			// .style("opacity", 0);
+              		//Create the arcs on which the text can be plotted - will be hidden
+              		var hiddenArcs = hiddenArcWrapper.selectAll(".circleArcHidden")
+              		  .data(overlapNode)
+              		   .enter().append("path")
+              			.attr("class", "circleArcHidden")
+              			.attr("id", function(d, i) { return "circleArc_"+i; })
+              			.attr("d", function(d,i) { return "M "+ -d.r +" 0 A "+ d.r +" "+ d.r +" 0 0 1 "+ d.r +" 0"; })
+              			.style("fill", "none")
+                    .style("stroke", "none")
+
+              		//Append the text to the arcs
+              		var arcText = hiddenArcWrapper.selectAll(".circleText")
+              			.data(overlapNode)
+              		.enter().append("text")
+              			.attr("class", "circleText")
+              			.style("font-size", function(d) {
+              				//Calculate best font-size
+              				d.fontSize = d.r / 5;
+              				return Math.round(d.fontSize)+"px";
+              			})
+                    .style("fill", "#fff")
+              		.append("textPath")
+                    .style("font-family", "Inconsolata")
+              			.attr("startOffset","50%")
+              			.attr("xlink:href",function(d,i) { return "#circleArc_"+i; })
+                    .style("display", function(d) { return d.parent === issueRoot ? "none" : d.children ? "none" : "inline"; })
+              			.text(function(d) { return d.name; });
+
+      // .call(wrap)
+
+  var zoomNode = svg.selectAll("circle,text");
+
+  d3.select("body")
+      .style("background", color(-1))
+      .on("click", function() { zoom(issueRoot); })
+
+  zoomTo([issueRoot.x, issueRoot.y, issueRoot.r * 2 + margin]);
+
+  function zoom(d,v) {
+    var focus0 = focus; focus = d;
+
+    var transition = d3.transition()
+        .duration(d3.event.altKey ? 7500 : 750)
+        .tween("zoom", function(d) {
+          var i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2 + margin]);
+          return function(t) { zoomTo(i(t)); };
+        });
+
+    transition.selectAll("text")
+      .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
+        .style("fill-opacity", function(d) { return d.parent === focus ? 1 : 0; })
+        .each("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
+        .each("end", function(d) { if (d.parent !== focus) this.style.display = "none"; })
+        // .each(function(d) {
+        //   d.textLength = d.r*2*0.7
+        //   wrap(this, d.textLength)
+        // })
+
+  }
+
+  function zoomTo(v) {
+    var k = diameter / v[2]; view = v;
+    zoomNode.attr("transform", function(d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; });
+    circles.attr("r", function(d) { return d.r * k; });
+  }
+
+})
+
+d3.select(self.frameElement).style("height", diameter + "px");
+
+function wrap(t, width) {
+  console.log(t)
+  console.log(width)
+
+var val = t.innerHTML,
+       t = d3.select(t),
+          words = val.split(/\s+/).reverse(),
+          word,
+          line = [],
+          lineNumber = 0,
+          lineHeight = 1.1, // ems
+          y = t.attr("y"),
+          dy = parseFloat(t.attr("dy")),
+          tspan = t.text(null)
+            .append("tspan")
+            .attr("x", 0)
+            .attr("y", y)
+            .attr("dy", dy + "em")
+            // .style("font-size", (Math.round(currentSize*0.5) <= 5 ? 0 : Math.round(currentSize*0.5))+"px");
+            while (word = words.pop()) {
+      	  line.push(word);
+      	  tspan.text(line.join(" "));
+      	  if (tspan.node().getComputedTextLength() > width | word === "|") {
+      		if (word = "|") word = "";
+      		line.pop();
+      		tspan.text(line.join(" "));
+      		line = [word];
+      		tspan = t.append("tspan")
+      					.attr("x", 0).attr("y", y)
+      					.attr("dy", ++lineNumber * lineHeight + extraHeight + dy + "em")
+      					.text(word);
+      	  }//if
+      	}//while
+
+  }
+
+</script>
+</body>

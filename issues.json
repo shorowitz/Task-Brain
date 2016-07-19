@@ -1,0 +1,361 @@
+[
+{
+  "_id":"57831fe1827f2b4c307558a3",
+  "title":"call lawyers",
+  "priority":3,
+  "assignee":{
+    "_id":"5782865d4a4a2fe42cca1823",
+    "chatTag":"@Rashid",
+    "firstName":"Rashid",
+    "lastName":"Islam",
+    "company":{
+      "_id":"5782865a4a4a2fe42cca181c",
+      "name":"Panzer Enterprises, LLC"
+    }
+  },
+  "milestone":{
+    "_id":"5783dac602fe2d881475462c",
+    "name":"goal1",
+    "category":{
+      "_id":"5782865d4a4a2fe42cca182a",
+      "name":"Accounting",
+      "creator":"5782865d4a4a2fe42cca1822",
+      "lastUpdatedBy":"5782865d4a4a2fe42cca1822",
+      "dateCreated":"2016-07-10T17:31:09.321Z",
+      "lastUpdated":"2016-07-10T17:31:09.321Z","__v":0
+    },
+    "creator":"5782865d4a4a2fe42cca1823",
+    "lastUpdatedBy":"5782865d4a4a2fe42cca1823",
+    "lastUpdated":"2016-07-11T17:43:34.329Z",
+    "dateCreated":"2016-07-11T17:43:34.329Z",
+    "__v":0,
+    "categoryName":"Accounting"
+  },
+  "company":"5782865a4a4a2fe42cca181c",
+  "creator":{
+    "_id":"5782865d4a4a2fe42cca1823",
+    "chatTag":"@Rashid",
+    "firstName":"Rashid",
+    "lastName":"Islam",
+    "company":{
+      "_id":"5782865a4a4a2fe42cca181c",
+      "name":"Panzer Enterprises,LLC"
+    }
+  },
+  "lastUpdatedBy":{
+    "_id":"5782865d4a4a2fe42cca1823",
+    "firstName":"Rashid",
+    "lastName":"Islam",
+    "company":{
+      "_id":"5782865a4a4a2fe42cca181c",
+      "name":"Panzer Enterprises, LLC"
+    }
+  },
+  "lastUpdated":"2016-07-11T17:43:34.467Z",
+  "dateCreated":"2016-07-11T04:26:09.424Z",
+  "status":"TO-DO",
+  "followers":[
+                {
+                  "_id":"5782865d4a4a2fe42cca1822",
+                  "chatTag":"@Casey",
+                  "firstName":"Casey",
+                  "lastName":"Panzer",
+                  "company":{
+                    "_id":"5782865a4a4a2fe42cca181b",
+                    "name":"Cushman Wakefield"
+                    }
+                  }
+                ],
+  "__v":1,
+  "room":"57832065827f2b4c307558a4"
+},
+{
+  "_id":"57831fe1827f2b4c307558a3",
+  "title":"task56",
+  "priority":1,
+  "assignee":{
+    "_id":"5782865d4a4a2fe42cca1823",
+    "chatTag":"@Rashid",
+    "firstName":"Rashid",
+    "lastName":"Islam",
+    "company":{
+      "_id":"5782865a4a4a2fe42cca181c",
+      "name":"Panzer Enterprises, LLC"
+    }
+  },
+  "milestone":{
+    "_id":"5783dac602fe2d881475462k",
+    "name":"goal9",
+    "category":{
+      "_id":"5782865d4a4a2fe42cca182a",
+      "name":"Accounting",
+      "creator":"5782865d4a4a2fe42cca1822",
+      "lastUpdatedBy":"5782865d4a4a2fe42cca1822",
+      "dateCreated":"2016-07-10T17:31:09.321Z",
+      "lastUpdated":"2016-07-10T17:31:09.321Z","__v":0
+    },
+    "creator":"5782865d4a4a2fe42cca1823",
+    "lastUpdatedBy":"5782865d4a4a2fe42cca1823",
+    "lastUpdated":"2016-07-11T17:43:34.329Z",
+    "dateCreated":"2016-07-11T17:43:34.329Z",
+    "__v":0,
+    "categoryName":"Accounting"
+  },
+  "company":"5782865a4a4a2fe42cca181c",
+  "creator":{
+    "_id":"5782865d4a4a2fe42cca1823",
+    "chatTag":"@Rashid",
+    "firstName":"Rashid",
+    "lastName":"Islam",
+    "company":{
+      "_id":"5782865a4a4a2fe42cca181c",
+      "name":"Panzer Enterprises,LLC"
+    }
+  },
+  "lastUpdatedBy":{
+    "_id":"5782865d4a4a2fe42cca1823",
+    "firstName":"Rashid",
+    "lastName":"Islam",
+    "company":{
+      "_id":"5782865a4a4a2fe42cca181c",
+      "name":"Panzer Enterprises, LLC"
+    }
+  },
+  "lastUpdated":"2016-07-11T17:43:34.467Z",
+  "dateCreated":"2016-07-11T04:26:09.424Z",
+  "status":"DOING",
+  "followers":[
+                {
+                  "_id":"5782865d4a4a2fe42cca1822",
+                  "chatTag":"@Casey",
+                  "firstName":"Casey",
+                  "lastName":"Panzer",
+                  "company":{
+                    "_id":"5782865a4a4a2fe42cca181b",
+                    "name":"Cushman Wakefield"
+                    }
+                  }
+                ],
+  "__v":1,
+  "room":"57832065827f2b4c307558a4"
+},
+{
+  "_id":"57831fe1827f2b4c307558a3",
+  "title":"task17",
+  "priority":1,
+  "assignee":{
+    "_id":"5782865d4a4a2fe42cca1823",
+    "chatTag":"@Rashid",
+    "firstName":"Rashid",
+    "lastName":"Islam",
+    "company":{
+      "_id":"5782865a4a4a2fe42cca181c",
+      "name":"Panzer Enterprises, LLC"
+    }
+  },
+  "milestone":{
+    "_id":"5783dac602fe2d881475462k",
+    "name":"goal9",
+    "category":{
+      "_id":"5782865d4a4a2fe42cca182a",
+      "name":"Accounting",
+      "creator":"5782865d4a4a2fe42cca1822",
+      "lastUpdatedBy":"5782865d4a4a2fe42cca1822",
+      "dateCreated":"2016-07-10T17:31:09.321Z",
+      "lastUpdated":"2016-07-10T17:31:09.321Z","__v":0
+    },
+    "creator":"5782865d4a4a2fe42cca1823",
+    "lastUpdatedBy":"5782865d4a4a2fe42cca1823",
+    "lastUpdated":"2016-07-11T17:43:34.329Z",
+    "dateCreated":"2016-07-11T17:43:34.329Z",
+    "__v":0,
+    "categoryName":"Accounting"
+  },
+  "company":"5782865a4a4a2fe42cca181c",
+  "creator":{
+    "_id":"5782865d4a4a2fe42cca1823",
+    "chatTag":"@Rashid",
+    "firstName":"Rashid",
+    "lastName":"Islam",
+    "company":{
+      "_id":"5782865a4a4a2fe42cca181c",
+      "name":"Panzer Enterprises,LLC"
+    }
+  },
+  "lastUpdatedBy":{
+    "_id":"5782865d4a4a2fe42cca1823",
+    "firstName":"Rashid",
+    "lastName":"Islam",
+    "company":{
+      "_id":"5782865a4a4a2fe42cca181c",
+      "name":"Panzer Enterprises, LLC"
+    }
+  },
+  "lastUpdated":"2016-07-11T17:43:34.467Z",
+  "dateCreated":"2016-07-11T04:26:09.424Z",
+  "status":"CLOSED",
+  "followers":[
+                {
+                  "_id":"5782865d4a4a2fe42cca1822",
+                  "chatTag":"@Casey",
+                  "firstName":"Casey",
+                  "lastName":"Panzer",
+                  "company":{
+                    "_id":"5782865a4a4a2fe42cca181b",
+                    "name":"Cushman Wakefield"
+                    }
+                  }
+                ],
+  "__v":1,
+  "room":"57832065827f2b4c307558a4"
+},
+{
+  "_id":"57831fe1827f2b4c307558a4",
+  "title":"task9",
+  "priority":2,
+  "assignee":{
+    "_id":"5782865d4a4a2fe42cca1823",
+    "chatTag":"@Rashid",
+    "firstName":"Rashid",
+    "lastName":"Islam",
+    "company":{
+      "_id":"5782865a4a4a2fe42cca181c",
+      "name":"Panzer Enterprises, LLC"
+    }
+  },
+  "milestone":{
+    "_id":"5783dac602fe2d881475462c",
+    "name":"goal1",
+    "category":{
+      "_id":"5782865d4a4a2fe42cca182a",
+      "name":"Accounting",
+      "creator":"5782865d4a4a2fe42cca1822",
+      "lastUpdatedBy":"5782865d4a4a2fe42cca1822",
+      "dateCreated":"2016-07-10T17:31:09.321Z",
+      "lastUpdated":"2016-07-10T17:31:09.321Z","__v":0
+    },
+    "creator":"5782865d4a4a2fe42cca1823",
+    "lastUpdatedBy":"5782865d4a4a2fe42cca1823",
+    "lastUpdated":"2016-07-11T17:43:34.329Z",
+    "dateCreated":"2016-07-11T17:43:34.329Z",
+    "__v":0,
+    "categoryName":"Accounting"
+  },
+  "company":"5782865a4a4a2fe42cca181c",
+  "creator":{
+    "_id":"5782865d4a4a2fe42cca1823",
+    "chatTag":"@Rashid",
+    "firstName":"Rashid",
+    "lastName":"Islam",
+    "company":{
+      "_id":"5782865a4a4a2fe42cca181c",
+      "name":"Panzer Enterprises,LLC"
+    }
+  },
+  "lastUpdatedBy":{
+    "_id":"5782865d4a4a2fe42cca1823",
+    "firstName":"Rashid",
+    "lastName":"Islam",
+    "company":{
+      "_id":"5782865a4a4a2fe42cca181c",
+      "name":"Panzer Enterprises, LLC"
+    }
+  },
+  "lastUpdated":"2016-07-11T17:43:34.467Z",
+  "dateCreated":"2016-07-11T04:26:09.424Z",
+  "status":"TO-DO",
+  "followers":[
+                {
+                  "_id":"5782865d4a4a2fe42cca1822",
+                  "chatTag":"@Casey",
+                  "firstName":"Casey",
+                  "lastName":"Panzer",
+                  "company":{
+                    "_id":"5782865a4a4a2fe42cca181b",
+                    "name":"Cushman Wakefield"
+                    }
+                  }
+                ],
+  "__v":1,
+  "room":"57832065827f2b4c307558a4"
+},
+{
+  "_id":"57831fe1827f2b4c307558a3",
+  "title":"task15",
+  "priority":2,
+  "assignee":{
+    "_id":"5782865d4a4a2fe42cca1826",
+    "chatTag":"@Rashid",
+    "firstName":"Sara",
+    "lastName":"Islam",
+    "company":{
+      "_id":"5782865a4a4a2fe42cca181c",
+      "name":"Panzer Enterprises, LLC"
+    }
+  },
+  "milestone":{
+    "_id":"5783dac602fe2d881475462p",
+    "name":"goal1",
+    "category":{
+      "_id":"5782865d4a4a2fe42cca182a",
+      "name":"Accounting",
+      "creator":"5782865d4a4a2fe42cca1822",
+      "lastUpdatedBy":"5782865d4a4a2fe42cca1822",
+      "dateCreated":"2016-07-10T17:31:09.321Z",
+      "lastUpdated":"2016-07-10T17:31:09.321Z","__v":0
+    },
+    "creator":"5782865d4a4a2fe42cca1823",
+    "lastUpdatedBy":"5782865d4a4a2fe42cca1823",
+    "lastUpdated":"2016-07-11T17:43:34.329Z",
+    "dateCreated":"2016-07-11T17:43:34.329Z",
+    "__v":0,
+    "categoryName":"Accounting"
+  },
+  "company":"5782865a4a4a2fe42cca181c",
+  "creator":{
+    "_id":"5782865d4a4a2fe42cca1823",
+    "chatTag":"@Rashid",
+    "firstName":"Sara",
+    "lastName":"Islam",
+    "company":{
+      "_id":"5782865a4a4a2fe42cca181c",
+      "name":"Panzer Enterprises,LLC"
+    }
+  },
+  "lastUpdatedBy":{
+    "_id":"5782865d4a4a2fe42cca1823",
+    "firstName":"Rashid",
+    "lastName":"Islam",
+    "company":{
+      "_id":"5782865a4a4a2fe42cca181c",
+      "name":"Panzer Enterprises, LLC"
+    }
+  },
+  "lastUpdated":"2016-07-11T17:43:34.467Z",
+  "dateCreated":"2016-07-11T04:26:09.424Z",
+  "status":"TO-DO",
+  "followers":[
+                {
+                  "_id":"5782865d4a4a2fe42cca1822",
+                  "chatTag":"@Casey",
+                  "firstName":"Casey",
+                  "lastName":"Panzer",
+                  "company":{
+                    "_id":"5782865a4a4a2fe42cca181b",
+                    "name":"Cushman Wakefield"
+                    }
+                  }
+                ],
+  "__v":1,
+  "room":"57832065827f2b4c307558a4"
+},
+{
+"_id":"5783dae802fe2d8814754630","title":"task2","priority":2,"assignee":{"_id":"5782865d4a4a2fe42cca1822","chatTag":"@Casey","firstName":"Casey","lastName":"Panzer","company":{"_id":"5782865a4a4a2fe42cca181b","name":"Cushman Wakefield"}},"milestone":{"_id":"5783dae802fe2d881475462f","name":"goal2","asset":{"_id":"5782fecfdbbccae843a41f78","investmentName":"Asset1","propertyType":"Office","yearBuilt":1970,"yearRenovated":2017,"address":"33 Wall St, New York, NY 10005, USA","subMarket":"5782fecddbbccae843a41f77","numberOfUnits":2,"netSquareFootage":5,"basis":5,"unitType":"Square Feet","class":"A","city":"Lower Manhattan","state":"NY","position":{"type":"Point","coordinates":[-74.01010259999998,40.7067374]},"lastUpdatedBy":"5782865d4a4a2fe42cca1823","lastUpdated":"2016-07-11T02:05:03.303Z","__v":0,"saleComps":[],"leaseComps":[],"issues":[],"files":[]},"creator":"5782865d4a4a2fe42cca1823","lastUpdatedBy":"5782865d4a4a2fe42cca1823","lastUpdated":"2016-07-11T17:44:08.637Z","dateCreated":"2016-07-11T17:44:08.637Z","__v":0,"categoryName":"Asset1"},"company":"5782865a4a4a2fe42cca181c","creator":{"_id":"5782865d4a4a2fe42cca1823","chatTag":"@Rashid","firstName":"Rashid","lastName":"Islam","company":{"_id":"5782865a4a4a2fe42cca181c","name":"Panzer Enterprises, LLC"}},"lastUpdatedBy":{"_id":"5782865d4a4a2fe42cca1823","firstName":"Rashid","lastName":"Islam","company":{"_id":"5782865a4a4a2fe42cca181c","name":"Panzer Enterprises, LLC"}},"lastUpdated":"2016-07-11T17:44:08.662Z","dateCreated":"2016-07-11T17:44:08.662Z","status":"TO-DO","followers":[],"__v":0
+},
+{
+"_id":"5783dae802fe2d8814754639","title":"task9","priority":2,"assignee":{"_id":"5782865d4a4a2fe42cca1822","chatTag":"@Casey","firstName":"Sara","lastName":"Panzer","company":{"_id":"5782865a4a4a2fe42cca181b","name":"Cushman Wakefield"}},"milestone":{"_id":"5783dae802fe2d881475462f","name":"goal2","asset":{"_id":"5782fecfdbbccae843a41f78","investmentName":"Asset1","propertyType":"Office","yearBuilt":1970,"yearRenovated":2017,"address":"33 Wall St, New York, NY 10005, USA","subMarket":"5782fecddbbccae843a41f77","numberOfUnits":2,"netSquareFootage":5,"basis":5,"unitType":"Square Feet","class":"A","city":"Lower Manhattan","state":"NY","position":{"type":"Point","coordinates":[-74.01010259999998,40.7067374]},"lastUpdatedBy":"5782865d4a4a2fe42cca1823","lastUpdated":"2016-07-11T02:05:03.303Z","__v":0,"saleComps":[],"leaseComps":[],"issues":[],"files":[]},"creator":"5782865d4a4a2fe42cca1823","lastUpdatedBy":"5782865d4a4a2fe42cca1823","lastUpdated":"2016-07-11T17:44:08.637Z","dateCreated":"2016-07-11T17:44:08.637Z","__v":0,"categoryName":"Asset1"},"company":"5782865a4a4a2fe42cca181c","creator":{"_id":"5782865d4a4a2fe42cca1823","chatTag":"@Rashid","firstName":"Rashid","lastName":"Islam","company":{"_id":"5782865a4a4a2fe42cca181c","name":"Panzer Enterprises, LLC"}},"lastUpdatedBy":{"_id":"5782865d4a4a2fe42cca1823","firstName":"Rashid","lastName":"Islam","company":{"_id":"5782865a4a4a2fe42cca181c","name":"Panzer Enterprises, LLC"}},"lastUpdated":"2016-07-11T17:44:08.662Z","dateCreated":"2016-07-11T17:44:08.662Z","status":"TO-DO","followers":[],"__v":0
+},
+{
+"_id":"5783daff02fe2d8814754632","title":"task3","priority":2,"assignee":{"_id":"5782865d4a4a2fe42cca1823","chatTag":"@Rashid","firstName":"Rashid","lastName":"Islam","company":{"_id":"5782865a4a4a2fe42cca181c","name":"Panzer Enterprises, LLC"}},"milestone":{"_id":"5783daff02fe2d8814754631","name":"goal3","category":{"_id":"5782865d4a4a2fe42cca1828","name":"Business Development","creator":"5782865d4a4a2fe42cca1822","lastUpdatedBy":"5782865d4a4a2fe42cca1822","dateCreated":"2016-07-10T17:31:09.319Z","lastUpdated":"2016-07-10T17:31:09.319Z","__v":0},"creator":"5782865d4a4a2fe42cca1823","lastUpdatedBy":"5782865d4a4a2fe42cca1823","lastUpdated":"2016-07-11T17:44:31.403Z","dateCreated":"2016-07-11T17:44:31.403Z","__v":0,"categoryName":"Business Development"},"company":"5782865a4a4a2fe42cca181c","creator":{"_id":"5782865d4a4a2fe42cca1823","chatTag":"@Rashid","firstName":"Rashid","lastName":"Islam","company":{"_id":"5782865a4a4a2fe42cca181c","name":"Panzer Enterprises, LLC"}},"lastUpdatedBy":{"_id":"5782865d4a4a2fe42cca1823","firstName":"Rashid","lastName":"Islam","company":{"_id":"5782865a4a4a2fe42cca181c","name":"Panzer Enterprises, LLC"}},"lastUpdated":"2016-07-11T17:44:31.442Z","dateCreated":"2016-07-11T17:44:31.442Z","status":"TO-DO","followers":[],"__v":0
+}
+]
