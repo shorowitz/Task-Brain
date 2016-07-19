@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+  <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.css" charset="utf-8">
+</head>
+<style>
+
+.node .leaf{
+  cursor: pointer;
+}
+
+.node:hover {
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.label {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  src: local('Inconsolata'), url(https://fonts.gstatic.com/s/inconsolata/v12/BjAYBlHtW3CJxDcjzrnZCCYE0-AqJ3nfInTTiDXDjU4.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+  text-anchor: middle;
+  text-shadow: 0 1px 0 #000, 1px 0 0 #000, -1px 0 0 #000, 0 -1px 0 #000;
+}
+
+.circleText {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  color: #fff;
+}
+
+.label,
+.node--root,
+.node--leaf {
+  pointer-events: none;
+}
+
+</style>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
+<script>
+
+var overlapNode = [];
+
+var diameter = 700,
+    margin = 20,
+    format = d3.format(",d");
+
+var colorScale = d3.scale.linear()
+    .domain(["1", "2", "3"])
+    .range(["#419a43","#ffb20c","#e80535"]);
+
+var color = d3.scale.linear()
+    .domain([-1, 5])
+    .range(["hsl(0, 0%, 0%)", "hsl(190,21.6%,80%)"]) //this range should match M background colors
+    .interpolate(d3.interpolateHcl);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", diameter)
+    .attr("height", diameter)
+  .append("g")
+    .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+
+d3.json("issues.json", function(error, issues) {
+
+  var filteredIssues = issues.filter(function(d) { return d.status !== 'CLOSED'});
+
+  filteredIssues.forEach(function(d) {
+    d.status === 'TO-DO' ? d.icon = 'bower_components/Ionicons/src/android-radio-button-off.svg' : d.status === 'DOING' ? d.icon = 'bower_components/Ionicons/png/512/contrast.png' : d.icon = 'bower_components/Ionicons/png/512/record.png';
+    d.category = '-' + d.milestone.categoryName;
+    d.milestone = d.milestone._id + '-' + d.milestone.name;
+    d.assignee = d.assignee._id + '-' + d.assignee.firstName + ' ' + d.assignee.lastName;
+    d.title2 = d._id + '-' + d.title;
+  })
+
+  var nestedIssues = d3.nest()
+    .key(function(d) {return d.category })
+    .key(function(d) {return d.milestone})
+    .key(function(d) {return d.assignee})
+    .key(function(d) { return d.title2})
+    .rollup(function(values) {
+      return {
+        allValues: values.length,
+        id: values[0]._id,
+        title: values[0].title,
+        assignee: values[0].assignee.split('-')[1],
+        priority: values[0].priority,
+        status: values[0].status,
+        icon: values[0].icon
+    }})
+    .entries(filteredIssues)
+
+  console.log(nestedIssues)
+
+  var pack = d3.layout.pack()
+    .size([diameter - 4, diameter - 4])
+    .children(function(d) {
+      return d.values;  // accessor for children
+    })
+    .value(function(d) {
+      return d.values.allValues;  // accessor for values
+    })
+    .padding(1)
+
+  var issueRoot = {
+      key: "Tasks",
+      values: nestedIssues
+  };
+
+  var focus = issueRoot,
+      nodes = pack.nodes(issueRoot),
+      view;
+
+
+
+  var node = svg.datum(issueRoot).selectAll(".node")
+    .data(nodes)
+  .enter().append("g")
+    .attr("class", function(d) { return d.children ? "node" : "leaf node"; })
+
+  var defs = node.append('defs')
+
+  defs.append('svg:pattern')
+    .attr('id', function(d) { return (d.id + "-icon");})
+    .attr('width', '1')
+    .attr('height', '1')
+    .attr('patternContentUnits', 'objectBoundingBox')
+  .append('svg:image')
+    .attr('xlink:href', function(d) { return d.values.icon})
+    .attr("preserveAspectRatio", "xMinYMin slice")
+    .attr('width', 1)
+    .attr('height', 1);
+
+  var circles = node.append("circle")
+    .attr("r", function(d) { return d.r; })
+    .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
+    .style("fill", function(d) { return d.children ? color(d.depth) : "url(#" + d.id +"-icon)"; })
+    .style("stroke", function(d) {return d.children ? "none" : colorScale(d.values.priority)})
+    .style("stroke-width", function(d) {return d.children ? "none" : "6px"})
+    .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); })
+    // .style("fill-opacity", will need to be a function based on d.dueDate;
+
+// going to need this to make the task/last circles clickable:
+// http://stackoverflow.com/questions/27514394/d3js-making-last-circle-a-hyperlink
+
+// also this:
+// http://stackoverflow.com/questions/16700970/d3-circle-pack-html-in-text-attribute
+
+  var text = svg.selectAll("text")
+      .data(nodes)
+    .enter().append("text")
+      .attr("class", "label")
+      .style("fill", "#fff")
+      .style("fill-opacity", function(d) { return d.parent === issueRoot ? 1 : 0; })
+      .style("display", function(d) { return d.parent === issueRoot ? "inline" : "none"; })
+      .text( function(d) { return !d.children ? d.values.assignee + " - " + d.values.title : d.key.split('-')[1]})
+
+
+////ALL CODE BELOW FOR ARC TITLES///
+
+      // circles.filter(function(d,i) { return d3.select(this).attr("class") === "node"; })
+      //     			.each(function(d,i) {
+      //     					overlapNode[i] = {
+      //     						name: d.key.split('-')[1],
+      //     						depth: d.depth,
+      //     						r: d.r,
+      //     						x: d.x,
+      //     						y: d.y
+      //     					}
+      //     			});
+      //
+      //           //Create a wrapper for the arcs and text
+      //         		var hiddenArcWrapper = node.append("g")
+      //         			.attr("class", "hiddenArcWrapper")
+      //         			// .style("opacity", 0);
+      //         		//Create the arcs on which the text can be plotted - will be hidden
+      //         		var hiddenArcs = hiddenArcWrapper.selectAll(".circleArcHidden")
+      //         		  .data(overlapNode)
+      //         		.enter().append("path")
+      //         			.attr("class", "circleArcHidden")
+      //         			.attr("id", function(d, i) { return "circleArc_"+i; })
+      //         			.attr("d", function(d,i) { return "M "+ -d.r +" 0 A "+ d.r +" "+ d.r +" 0 0 1 "+ d.r +" 0"; })
+      //         			.style("fill", "none")
+      //               .style("stroke", "none")
+      //
+      //         		//Append the text to the arcs
+      //         		var arcText = hiddenArcWrapper.selectAll(".circleText")
+      //         			.data(overlapNode)
+      //         		.enter().append("text")
+      //         			.attr("class", "circleText")
+      //         			.style("font-size", function(d) {
+      //         				//Calculate best font-size
+      //         				d.fontSize = d.r / 5;
+      //         				return Math.round(d.fontSize)+"px";
+      //         			})
+      //               .style("fill", "#fff")
+      //         		.append("textPath")
+      //               .style("font-family", "Inconsolata")
+      //         			.attr("startOffset","50%")
+      //         			.attr("xlink:href",function(d,i) { return "#circleArc_"+i; })
+      //               .style("display", function(d) { return d.parent === issueRoot ? "none" : d.children ? "none" : "inline"; })
+      //         			.text(function(d) { return d.name; });
+
+      // .call(wrap)
+
+  var zoomNode = svg.selectAll("circle,text");
+
+  d3.select("body")
+      .style("background", color(-1))
+      .on("click", function() { zoom(issueRoot); })
+
+  zoomTo([issueRoot.x, issueRoot.y, issueRoot.r * 2 + margin]);
+
+  function zoom(d,v) {
+    var focus0 = focus; focus = d;
+
+    var transition = d3.transition()
+        .duration(d3.event.altKey ? 7500 : 750)
+        .tween("zoom", function(d) {
+          var i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2 + margin]);
+          return function(t) { zoomTo(i(t)); };
+        });
+
+    transition.selectAll("text")
+      .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
+        .style("fill-opacity", function(d) { return d.parent === focus ? 1 : 0; })
+        .each("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
+        .each("end", function(d) { if (d.parent !== focus) this.style.display = "none"; })
+        // .each(function(d) {
+        //   d.textLength = d.r*2*0.7
+        //   wrap(this, d.textLength)
+        // })
+
+  }
+
+  function zoomTo(v) {
+    var k = diameter / v[2]; view = v;
+    zoomNode.attr("transform", function(d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; });
+    circles.attr("r", function(d) { return d.r * k; });
+  }
+
+})
+
+d3.select(self.frameElement).style("height", diameter + "px");
+
+function wrap(t, width) {
+  console.log(t)
+  console.log(width)
+
+var val = t.innerHTML,
+       t = d3.select(t),
+          words = val.split(/\s+/).reverse(),
+          word,
+          line = [],
+          lineNumber = 0,
+          lineHeight = 1.1, // ems
+          y = t.attr("y"),
+          dy = parseFloat(t.attr("dy")),
+          tspan = t.text(null)
+            .append("tspan")
+            .attr("x", 0)
+            .attr("y", y)
+            .attr("dy", dy + "em")
+            // .style("font-size", (Math.round(currentSize*0.5) <= 5 ? 0 : Math.round(currentSize*0.5))+"px");
+            while (word = words.pop()) {
+      	  line.push(word);
+      	  tspan.text(line.join(" "));
+      	  if (tspan.node().getComputedTextLength() > width | word === "|") {
+      		if (word = "|") word = "";
+      		line.pop();
+      		tspan.text(line.join(" "));
+      		line = [word];
+      		tspan = t.append("tspan")
+      					.attr("x", 0).attr("y", y)
+      					.attr("dy", ++lineNumber * lineHeight + extraHeight + dy + "em")
+      					.text(word);
+      	  }//if
+      	}//while
+
+  }
+
+</script>
+</body>
